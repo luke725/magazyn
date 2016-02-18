@@ -8,7 +8,7 @@ class MainWindow(QtGui.QMainWindow):
       QtGui.QWidget.__init__(self, parent)
       self.ui = Ui_MainWindow()
       self.ui.setupUi(self)
-      self.ui.equipmentUsedLineEdit.setValidator(QtGui.QIntValidator(0, 99999999999, self))
+#      self.ui.equipmentUsedLineEdit.setValidator(QtGui.QIntValidator(0, 99999999999, self))
       self.ui.addUsageButton.clicked.connect(self.add_usage)
       self.ui.tableWidget_2.itemChanged.connect(self.change_equipment_amount)
       
@@ -21,11 +21,12 @@ class MainWindow(QtGui.QMainWindow):
       
       
     def add_usage(self):
-      equipment_id = self.ui.equipmentUsedLineEdit.text().toInt()[0]
-      usage = self.ui.amountUsedSpinBox.value()
-      self.ui.equipmentUsedLineEdit.clear()
-      self.ui.amountUsedSpinBox.setValue(1)
-      add_usage(equipment_id, usage)
+      if (self.ui.equipmentUsedLineEdit.text().toInt()[1]):
+        equipment_id = self.ui.equipmentUsedLineEdit.text().toInt()[0]
+        usage = self.ui.amountUsedSpinBox.value()
+        self.ui.equipmentUsedLineEdit.clear()
+        self.ui.amountUsedSpinBox.setValue(1)
+        add_usage(equipment_id, usage)
       self.draw()
 
       
