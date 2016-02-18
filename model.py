@@ -110,25 +110,20 @@ class Session():
     
   def all_equipment(self):
     return self.session.query(Equipment).all()
+
+  def add_usage(self, equipment_id, usage):
+    equipment = self.find_equipment_or_create(equipment_id)
+    self.get_current_or_create().add_usage(equipment_id, usage)
+    equipment.decrease_amount(usage)
+    self.commit()
     
+  def update_equipment(self, equipment_id, amount_available):
+    equipment = self.find_equipment(equipment_id)
+    equipment.amount_available = amount_available
+    self.commit()
+  
   def commit(self):
     self.session.commit()
     
   def close(self):
     self.session.close()
-
-def add_usage(equipment_id, usage):
-  session = Session()
-  equipment = session.find_equipment_or_create(equipment_id)
-  session.get_current_or_create().add_usage(equipment_id, usage)
-  equipment.decrease_amount(usage)
-  session.commit()
-  session.close()
-  
-def update_equipment(equipment_id, amount_available):
-  session = Session()
-  equipment = session.find_equipment(equipment_id)
-  equipment.amount_available = amount_available
-  session.commit()
-  session.close()
-      

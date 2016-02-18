@@ -11,21 +11,24 @@ class MainWindow(QtGui.QMainWindow):
       self.tableWidget_2.itemChanged.connect(self.change_equipment_amount)
       
     def change_equipment_amount(self, item):
+      session = Session()
       if (item.text().toInt()[1]):
         amount_available = item.text().toInt()[0]
         equipment_id = self.tableWidget_2.item(item.row(), 0).text().toInt()[0]
-        update_equipment(equipment_id, amount_available)
-      self.draw()
-      
+        session.update_equipment(equipment_id, amount_available)
+      self.draw(session)
+      session.close()
       
     def add_usage(self):
+      session = Session()
       if (self.equipmentUsedLineEdit.text().toInt()[1]):
         equipment_id = self.equipmentUsedLineEdit.text().toInt()[0]
         usage = self.amountUsedSpinBox.value()
-        add_usage(equipment_id, usage)
+        session.add_usage(equipment_id, usage)
       self.equipmentUsedLineEdit.clear()
       self.amountUsedSpinBox.setValue(1)
-      self.draw()
+      self.draw(session)
+      session.close()
 
       
     def __set_row(self, row, key, value):
@@ -59,11 +62,10 @@ class MainWindow(QtGui.QMainWindow):
       self.tableWidget_2.blockSignals(False)
       
       
-    def draw(self):
-      session = Session()
+    def draw(self, session):
       self.__draw_usage(session)
       self.__draw_state(session)
-      session.close()
+      
 
     def create_read_only_table_widget_item(self, string):  
       item = QtGui.QTableWidgetItem(string)
@@ -80,5 +82,7 @@ if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
     myapp = MainWindow()
     myapp.show()
-    myapp.draw()
+    session = Session()
+    myapp.draw(session)
+    session.close()
     sys.exit(app.exec_())
