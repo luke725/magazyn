@@ -115,15 +115,10 @@ class Session():
     equipment = self.find_equipment_or_create(equipment_id)
     self.get_current_or_create().add_usage(equipment_id, usage)
     equipment.decrease_amount(usage)
-    self.commit()
     
   def update_equipment(self, equipment_id, amount_available):
     equipment = self.find_equipment(equipment_id)
     equipment.amount_available = amount_available
-    self.commit()
-  
-  def commit(self):
-    self.session.commit()
     
-  def close(self):
-    self.session.close()
+  def begin(self):
+    return self.session.begin()
