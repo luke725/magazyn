@@ -25,8 +25,9 @@ class MainWindow(QtGui.QMainWindow):
         equipment_id = self.equipmentUsedLineEdit.text().toInt()[0]
         usage = self.amountUsedSpinBox.value()
         session.add_usage(equipment_id, usage)
-      self.equipmentUsedLineEdit.clear()
-      self.amountUsedSpinBox.setValue(1)
+      else:
+        self.equipmentUsedLineEdit.clear()
+        self.amountUsedSpinBox.setValue(1)
       self.draw(session)
       session.close()
 

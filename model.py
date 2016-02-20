@@ -63,7 +63,7 @@ class EquipmentUsage(Base):
     def __repr__(self):
         return "EquipmentUsage(%d, %d, %d)" % (self.treatment_id, self.equipment_id, self.amount_used)
 
-engine = create_engine('sqlite:///data.db', echo=False)
+engine = create_engine('mysql+mysqldb://sql2107606:tU2!bP4%@sql2.freemysqlhosting.net/sql2107606', echo=False)
 Base.metadata.create_all(engine)
 SessionBase = sessionmaker(bind=engine)
 

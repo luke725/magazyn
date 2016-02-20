@@ -16,5 +16,5 @@ setup(
     options={'py2exe':{
         'includes': ['sip'],
         'excludes': ['PyQt4.uic.port_v3'],
-        'packages': ['sqlalchemy.dialects.sqlite']}},
+        'packages': ['sqlalchemy.dialects.sqlite', 'sqlalchemy.dialects.mysql', 'MySQLdb']}},
     data_files = DATA)
